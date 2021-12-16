@@ -29,3 +29,12 @@ http 5000`)
 
 A form that alerts the user if the data entered is invalid.
 
+
+## Integration test 
+
+For runnig integration test 
+run 2 command for IOS
+1) open -a Simulator
+2) flutter test integration_test
+
+
