@@ -1,55 +1,62 @@
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:form_app/main.dart';
 
 void main() {
+  var faker = new Faker();
+  var fakeFirstName = faker.person.firstName();
+  var fakerLastName = faker.person.lastName();
+  var email2 = fakeFirstName + fakerLastName + '@dormzi.com';
+  var fakeEmail = faker.internet.email();
+  var fakerPhone = faker.phoneNumber;
   group('Testing App Performance Tests', () {
     final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
         as IntegrationTestWidgetsFlutterBinding;
 
     binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
 
-    testWidgets('Scrolling test', (tester) async {
-      await tester.pumpWidget(FormApp());
+    // testWidgets('Scrolling test', (tester) async {
+    //   await tester.pumpWidget(FormApp());
 
-      final listFinder = find.byType(ListView);
+    //   final listFinder = find.byType(ListView);
 
-      await binding.watchPerformance(() async {
-        await tester.fling(listFinder, const Offset(0, -500), 10000);
-        await tester.pumpAndSettle();
+    //   await binding.watchPerformance(() async {
+    //     await tester.fling(listFinder, const Offset(0, -500), 10000);
+    //     await tester.pumpAndSettle();
 
-        await tester.fling(listFinder, const Offset(0, 500), 10000);
-        await tester.pumpAndSettle();
-      }, reportKey: 'scrolling_summary');
-    });
+    //     await tester.fling(listFinder, const Offset(0, 500), 10000);
+    //     await tester.pumpAndSettle();
+    //   }, reportKey: 'scrolling_summary');
+    // });
 
-    testWidgets('Sign in test', (tester) async {
-      await tester.pumpWidget(FormApp());
+    // testWidgets('Sign in test', (tester) async {
+    //   await tester.pumpWidget(FormApp());
 
-      await tester.tap(find.text('Sign in with HTTP'));
-      await tester.pumpAndSettle(const Duration(seconds: 1));
-      // expect(find.text('Sign in Form'), findsOneWidget);
+    //   await tester.tap(find.text('Sign in with HTTP'));
+    //   await tester.pumpAndSettle(const Duration(seconds: 1));
+    //   // expect(find.text('Sign in Form'), findsOneWidget);
 
-      final email = find.widgetWithText(TextFormField, 'Email');
-      final pass = find.widgetWithText(TextFormField, 'Password');
-      final signInBtn = find.widgetWithText(TextButton, 'Sign in');
-      const emailSet = 'root';
-      const passwordSet = 'password';
+    //   final email = find.widgetWithText(TextFormField, 'Email');
+    //   final pass = find.widgetWithText(TextFormField, 'Password');
+    //   final signInBtn = find.widgetWithText(TextButton, 'Sign in');
+    //   const emailSet = 'root';
+    //   const passwordSet = 'password';
 
-      await tester.tap(email);
-      await tester.pumpAndSettle(const Duration(seconds: 1));
-      await tester.enterText(email, emailSet);
-      await tester.pumpAndSettle(const Duration(seconds: 1));
-      await tester.tap(pass);
-      await tester.pumpAndSettle(const Duration(seconds: 1));
-      await tester.enterText(pass, passwordSet);
-      await tester.pumpAndSettle(const Duration(seconds: 1));
-      await tester.tap(signInBtn);
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+    //   await tester.tap(email);
+    //   await tester.pumpAndSettle(const Duration(seconds: 1));
+    //   await tester.enterText(email, emailSet);
+    //   await tester.pumpAndSettle(const Duration(seconds: 1));
+    //   await tester.tap(pass);
+    //   await tester.pumpAndSettle(const Duration(seconds: 1));
+    //   await tester.enterText(pass, passwordSet);
+    //   await tester.pumpAndSettle(const Duration(seconds: 1));
+    //   await tester.tap(signInBtn);
+    //   await tester.pumpAndSettle(const Duration(seconds: 1));
 
-      expect(find.text('Successfully signed in.'), findsOneWidget);
-    });
+    //   expect(find.text('Successfully signed in.'), findsOneWidget);
+    // });
 
     testWidgets('Autofill', (tester) async {
       await tester.pumpWidget(FormApp());
@@ -66,11 +73,11 @@ void main() {
       final country = find.widgetWithText(TextField, 'Country');
       final countryCode = find.widgetWithText(TextField, 'Country Code');
 
-      const firstNameSet = 'Abbas';
-      const lastNameSet = 'Aliyev';
-      const emailSet = 'Abbas@dormzi.com';
+      var firstNameSet = fakeFirstName;
+      var lastNameSet = fakerLastName;
+      var emailSet = email2;
       const telephoneSet = '(425) 2793156';
-      const streetAdressSet = '3020 118TH AVE SE';
+      const streetAdressSet = '3020';
       const postalCodeSet = '98005';
       const countrySet = 'USA';
       const countryCodeSet = '+1';
